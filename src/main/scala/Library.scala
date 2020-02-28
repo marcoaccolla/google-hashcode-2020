@@ -9,15 +9,15 @@ case class Library(
 case object Library{
   //from parsed data
   def apply(index: Int, signupTime: Int, capacity: Int, books: List[Int], allBooks: Vector[Int], daysLeft: Int): Library = {
+    val booksValues = books.map(allBooks(_)).sum
     new Library(
       index,
       signupTime,
       capacity,
       books,
-      books.map(index =>
-        // library books score * daily capacity / signup time * (signup time / daysLeft)
-        allBooks(index)).sum * capacity /
-        (signupTime * (signupTime / daysLeft.toDouble))
+      // library books score * daily capacity / signup time * (signup time / daysLeft)
+      (booksValues * capacity) /
+      (signupTime * (signupTime / daysLeft.toDouble))
     )
   }
 

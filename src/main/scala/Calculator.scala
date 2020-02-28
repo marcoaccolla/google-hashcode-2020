@@ -10,7 +10,6 @@ case object Calculator{
     val daysLeft = lines
       .head
       .split(" ")
-      .toList
       .last
       .toInt
 
