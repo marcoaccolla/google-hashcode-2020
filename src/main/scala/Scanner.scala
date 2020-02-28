@@ -4,6 +4,7 @@ import scala.collection.mutable.ListBuffer
 case class Scanner(var libraryList: List[Library], var books: Vector[Int], daysLeft: Int){
   private var linesToSend: List[String] = List()
   private var lockCounter: Int = 0
+  private var totalScore: Int = 0
 
   def next(day: Int): Unit = {
     if (lockCounter == 0 && libraryList.nonEmpty) {
@@ -30,6 +31,7 @@ case class Scanner(var libraryList: List[Library], var books: Vector[Int], daysL
     //print number of libraries that will send books
     printWriter.println(linesToSend.grouped(2).size)
     linesToSend.foreach(printWriter.println)
+    println(totalScore)
   }
 
   private def getBooksToSend(library: Library, readyDay: Int): List[Int] = {
@@ -42,8 +44,10 @@ case class Scanner(var libraryList: List[Library], var books: Vector[Int], daysL
       .sortWith(_._2 > _._2)
 
     if (booksValue.size < bookCapacity) {
+      totalScore += booksValue.map(_._2).sum
       booksValue.map(_._1)
     } else {
+      totalScore += booksValue.take(bookCapacity.toInt).map(_._2).sum
       booksValue.take(bookCapacity.toInt).map(_._1)
     }
   }
