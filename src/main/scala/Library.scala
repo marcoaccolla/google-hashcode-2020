@@ -21,11 +21,20 @@ case object Library{
   private def calculateScore(signupTime: Int, capacity: Int, daysLeft: Int, books: List[Int], allBooks: Vector[Int]) = {
     // This is far too simple, needs to be a little bit more sophisticated
     // good things: total books value, library daily capacity
-    // c_incunabula scores better with
-    // val num = math.sqrt(books.map(allBooks(_)).sum * capacity)
-    val num = books.map(allBooks(_)).sum * capacity
     // bad things: signup time, days left for submission
-    val den = math.pow(signupTime.toDouble, 2.0) / daysLeft.toDouble
+
+    // input c scores better with
+    //val num = math.sqrt(books.map(allBooks(_)).sum * capacity)
+    //val den = math.pow(signupTime.toDouble, 9.0) / daysLeft.toDouble
+
+    // input e scores better with
+    //val num = math.sqrt(books.map(allBooks(_)).sortWith(_ > _).take(daysLeft * capacity).sum * capacity)
+    //val den = signupTime.toDouble / daysLeft.toDouble
+
+    //everything else
+    val num = books.map(allBooks(_)).sortWith(_ > _).take(daysLeft * capacity).sum
+    val den = signupTime.toDouble / daysLeft.toDouble
+
     num / den
   }
 

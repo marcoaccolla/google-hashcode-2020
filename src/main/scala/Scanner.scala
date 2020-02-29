@@ -14,7 +14,7 @@ case class Scanner(var libraryList: List[Library], var books: Vector[Int], daysL
       prepareOutput(currentLibrary, day)
       setUsedBooksToZero(currentLibrary)
 
-      libraryList = Calculator.calculateLibraries(libraryList.tail, books, day)
+      libraryList = Calculator.calculateLibraries(libraryList.tail, books, daysLeft - lockCounter)
     }
 
     lockCounter -= 1
