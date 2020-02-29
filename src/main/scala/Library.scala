@@ -9,16 +9,24 @@ case class Library(
 case object Library{
   //from parsed data
   def apply(index: Int, signupTime: Int, capacity: Int, books: List[Int], allBooks: Vector[Int], daysLeft: Int): Library = {
-    val booksValues = books.map(allBooks(_)).sum
     new Library(
       index,
       signupTime,
       capacity,
       books,
-      // library books score * daily capacity / signup time * (signup time / daysLeft)
-      (booksValues * capacity) /
-      (signupTime * (signupTime / daysLeft.toDouble))
+      calculateScore(signupTime, capacity, daysLeft, books, allBooks)
     )
+  }
+
+  private def calculateScore(signupTime: Int, capacity: Int, daysLeft: Int, books: List[Int], allBooks: Vector[Int]) = {
+    // This is far too simple, needs to be a little bit more sophisticated
+    // good things: total books value, library daily capacity
+    // c_incunabula scores better with
+    // val num = math.sqrt(books.map(allBooks(_)).sum * capacity)
+    val num = books.map(allBooks(_)).sum * capacity
+    // bad things: signup time, days left for submission
+    val den = math.pow(signupTime.toDouble, 2.0) / daysLeft.toDouble
+    num / den
   }
 
   //from Library

@@ -9,9 +9,7 @@ case class Scanner(var libraryList: List[Library], var books: Vector[Int], daysL
   def next(day: Int): Unit = {
     if (lockCounter == 0 && libraryList.nonEmpty) {
       val currentLibrary = libraryList.head
-
-      val signupTime = currentLibrary.signupTime
-      lockCounter = signupTime
+      lockCounter = currentLibrary.signupTime
 
       prepareOutput(currentLibrary, day)
       setUsedBooksToZero(currentLibrary)
